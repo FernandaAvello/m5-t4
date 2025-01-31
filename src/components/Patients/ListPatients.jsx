@@ -135,7 +135,7 @@ const ListPatients = () => {
       </Row>
       <Modal
         title={editingPatient ? "Editar Paciente" : "Añadir Nuevo Paciente"}
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
@@ -150,9 +150,9 @@ const ListPatients = () => {
           <Form.Item
             name="age"
             label="Edad"
+            type="number"
             rules={[
               { required: true, message: 'Por favor ingrese la edad del paciente' },
-              { type: 'number', message: 'La edad debe ser un número' },
               { validator: (_, value) => value && Number.isInteger(Number(value)) ? Promise.resolve() : Promise.reject('La edad debe ser un número entero') }
             ]}
           >

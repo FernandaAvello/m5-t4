@@ -3,6 +3,7 @@ import { Card, Tag, Row, Col } from 'antd';
 const { Meta } = Card;
 
 interface DoctorCardProps {
+  id: number;
   name: string;
   specialty: string;
   description: string;

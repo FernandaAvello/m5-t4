@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ServiceCard } from "./ServiceCard";
+import ServiceCard from "./ServiceCard";
 import { Row, Col, Button, Spin, Alert } from "antd";
 
 interface Service {
-  id: number;
-  name: string;
+  key: number;
+  icon: string;
+  title: string;
   description: string;
 }
 
@@ -56,7 +57,7 @@ const ListServices: React.FC = () => {
       <Row gutter={16}>
         {services.map(service => (
           <Col span={8} key={service.id}>
-            <ServiceCard service={service} />
+            <ServiceCard icon={service.icon} title={service.title} description={service.description} />
           </Col>
         ))}
       </Row>
