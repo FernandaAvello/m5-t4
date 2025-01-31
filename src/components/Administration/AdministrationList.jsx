@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Image, Button, Modal, Form, Input, Select } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import doctorsData from '../../../public/data/doctors.json';
 import useDoctorForm from '../../hooks/useDoctorForm';
 
@@ -7,18 +8,43 @@ const { Option } = Select;
 
 const AdministrationList = () => {
   const [doctors, setDoctors] = useState([]);
+  const [editingDoctorKey, setEditingDoctorKey] = useState(null);
   const {
     form,
     isModalVisible,
     showModal,
     handleCancel,
-    handleOk,
     errors,
   } = useDoctorForm();
 
   useEffect(() => {
     setDoctors(doctorsData);
   }, []);
+
+  const handleEdit = (record) => {
+    form.setFieldsValue(record);
+    setEditingDoctorKey(record.key);
+    showModal();
+  };
+
+  const handleDelete = (key) => {
+    setDoctors(doctors.filter(doctor => doctor.key !== key));
+  };
+
+  const handleOk = () => {
+    form.validateFields().then(values => {
+      if (editingDoctorKey !== null) {
+        setDoctors(doctors.map(doctor => (doctor.key === editingDoctorKey ? { ...doctor, ...values } : doctor)));
+        setEditingDoctorKey(null);
+      } else {
+        setDoctors([...doctors, { ...values, key: doctors.length + 1 }]);
+      }
+      form.resetFields();
+      handleCancel();
+    }).catch(info => {
+      console.log('Validate Failed:', info);
+    });
+  };
 
   const columns = [
     {
@@ -64,6 +90,16 @@ const AdministrationList = () => {
       key: 'hours',
       render: (hours) => hours.join(', '),
     },
+    {
+      title: 'Acciones',
+      key: 'actions',
+      render: (text, record) => (
+        <div>
+          <Button type="link" icon={<EditOutlined />} onClick={() => handleEdit(record)} style={{ marginRight: 8 }} />
+          <Button type="link" icon={<DeleteOutlined />} onClick={() => handleDelete(record.key)} />
+        </div>
+      ),
+    },
   ];
 
   return (
@@ -77,9 +113,9 @@ const AdministrationList = () => {
       </Button>
       <Table dataSource={doctors} columns={columns} rowKey="key" />
       <Modal
-        title="Añadir Nuevo Doctor"
-        visible={isModalVisible}
-        onOk={() => handleOk(doctors, setDoctors)}
+        title={editingDoctorKey !== null ? "Editar Doctor" : "Añadir Nuevo Doctor"}
+        open={isModalVisible}
+        onOk={handleOk}
         onCancel={handleCancel}
       >
         <Form form={form} layout="vertical">
