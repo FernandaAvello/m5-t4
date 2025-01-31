@@ -38,12 +38,12 @@ const items = [
       <Link to="/appointment">Agendamiento</Link>
     )
   },
-  // {
-  //   key: 'patients',
-  //   label: (
-  //     <Link to="/patients">Pacientes</Link>
-  //   )
-  // },
+  {
+    key: 'patients',
+    label: (
+      <Link to="/patients">Pacientes</Link>
+    )
+  },
   {
     key: 'administration',
     label: (

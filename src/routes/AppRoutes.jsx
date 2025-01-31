@@ -6,7 +6,7 @@ import Home from "../pages/Home";
 import Team from "../pages/Team";
 import Services from "../pages/Services";
 import Appointment from "../pages/Appointment";
-// import Patients from "../pages/Patients";
+import Patients from "../pages/Patients";
 import Login from "../pages/Login";
 import AccessDenied from "../pages/AccessDenied";
 import Vulnerabilities from "../pages/Vulnerabilities";
@@ -28,7 +28,7 @@ const AppRoutes = () => {
         <Route path="/team" element={<Team />} />
         <Route path="/services" element={<Services />} />
         <Route path="/appointment" element={<Appointment />} />
-        {/* <Route path="/patients" element={<Patients />} /> */}
+        <Route path="/patients" element={<Patients />} />
         <Route element={<PrivateRoute allowedRoles={['admin']} />}>
           <Route path="/administration" element={<Administration />} />
         </Route>
