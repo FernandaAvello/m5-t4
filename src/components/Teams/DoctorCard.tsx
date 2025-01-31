@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, Tag, Row, Col } from 'antd';
 const { Meta } = Card;
 
-// Recibe props que representan los datos del doctor
 interface DoctorCardProps {
   name: string;
   specialty: string;
